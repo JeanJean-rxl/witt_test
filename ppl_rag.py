@@ -10,8 +10,8 @@ from uuid import uuid4
 import re
 
 
-def read_markdown():
-    with open("tractatus.md", "r", encoding="utf-8") as f:
+def read_markdown(file_name):
+    with open(file_name, "r", encoding="utf-8") as f:
         data = f.read()
 
     pattern = re.compile(r"\*\*\[(.*?)\]\(.*?\)\*\*\s+(.*)")
@@ -32,8 +32,8 @@ def read_markdown():
     return _documents
 
 
-def prepare_dataset():
-    _documents = read_markdown()
+def prepare_dataset(file_name):
+    _documents = read_markdown(file_name)
 
     documents = [
         Document(
@@ -79,7 +79,7 @@ def prepare_pipeline(documents):
 
 
 if __name__ == "__main__":
-    documents = prepare_dataset()
+    documents = prepare_dataset('witt_test/tractatus.md')
     extractive_qa_pipeline = prepare_pipeline(documents)
     query = "When should one be silent?"
     res = extractive_qa_pipeline.run(
